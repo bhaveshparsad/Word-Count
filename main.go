@@ -7,6 +7,7 @@ import (
 	"sort"
 	"strings"
 )
+
 func main() {
 
 	fileName := "file.txt"
@@ -30,11 +31,7 @@ func WordCount(fileName string) string {
 	// count same words
 	m := make(map[string]int)
 	for _, word := range words {
-		if _, ok := m[word]; ok {
-			m[word]++
-		} else {
-			m[word] = 1
-		}
+		m[word]++
 	}
 
 	// create and fill slice of word-count pairs for sorting by count
