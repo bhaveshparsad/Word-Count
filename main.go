@@ -7,28 +7,27 @@ import (
 	"sort"
 	"strings"
 )
-
-// WordCount holds word and count pair
-type WordCount struct {
-	word  string
-	count int
-}
-
 func main() {
 
-    fileName := "file.txt"
+	fileName := "file.txt"
+	totalCounts := WordCount(fileName)
+	fmt.Println(totalCounts)
 
-        file, err := ioutil.ReadFile(fileName)
-    
-        if err != nil {
-    
-            log.Fatal(err)
-        }
-     // convert byteslice to string   
-        text := string(file)
-	    words := strings.Fields(text)
+}
 
-	// count same words 
+func WordCount(fileName string) string {
+
+	file, err := ioutil.ReadFile(fileName)
+
+	if err != nil {
+
+		log.Fatal(err)
+	}
+	// convert byteslice to string
+	text := string(file)
+	words := strings.Fields(text)
+
+	// count same words
 	m := make(map[string]int)
 	for _, word := range words {
 		if _, ok := m[word]; ok {
@@ -39,18 +38,25 @@ func main() {
 	}
 
 	// create and fill slice of word-count pairs for sorting by count
-	wordCounts := make([]WordCount, 0, len(m))
-	for key, val := range m {
-		wordCounts = append(wordCounts, WordCount{word: key, count: val})
+	wordCounts := make([]string, len(m))
+	for key := range m {
+		wordCounts = append(wordCounts, key)
 	}
 
-	// sort wordCount slice 
+	// sort wordCount slice
 	sort.Slice(wordCounts, func(i, j int) bool {
-		return wordCounts[i].count > wordCounts[j].count
+		return m[wordCounts[i]] > m[wordCounts[j]]
 	})
 
 	// get the ten most frequent words
-	for i := 0; i < len(wordCounts) && i < 10; i++ {
-		fmt.Println(wordCounts[i].word, ":", wordCounts[i].count)
+	n := make(map[string]int)
+	for index, key := range wordCounts {
+		n[key] = m[key]
+		fmt.Printf("%s %d\n", key, n[key])
+		if index == 9 {
+			break
+		}
 	}
+	return "Running"
+
 }
