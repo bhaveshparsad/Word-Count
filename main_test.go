@@ -1,14 +1,16 @@
 package main
 
-import "testing"
+import (
+	"testing"
+)
 
-func TestWordCount(t *testing.T) {
-	File := "file.txt"
-	Output := "Running"
+func TestWord(t *testing.T) {
+	str := "Think Future Technoogies Pvt. Ltd."
+	expected := "Success"
 
-	x := WordCount(File)
+	actual := word(str)
 
-	if x != Output {
-		t.Errorf("got %q, expected %q", x, Output)
+	if actual != expected {
+		t.Errorf("Failed...")
 	}
 }
